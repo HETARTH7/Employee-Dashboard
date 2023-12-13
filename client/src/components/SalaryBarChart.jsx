@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
-const AgeDistributionHistogram = ({ data }) => {
+const SalaryBarChart = ({ data }) => {
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
 
@@ -11,26 +11,19 @@ const AgeDistributionHistogram = ({ data }) => {
         chartInstance.current.destroy();
       }
 
-      const ages = data.map((employee) => employee.age);
+      const salaries = data.map((employee) => employee.salary);
+      const labels = data.map((employee, index) => employee.name);
 
       const ctx = chartRef.current.getContext("2d");
-
-      const ageCounts = {};
-      ages.forEach((age) => {
-        ageCounts[age] = (ageCounts[age] || 0) + 1;
-      });
-
-      const ageLabels = Object.keys(ageCounts);
-      const countData = ageLabels.map((age) => ageCounts[age]);
 
       chartInstance.current = new Chart(ctx, {
         type: "bar",
         data: {
-          labels: ageLabels,
+          labels: labels,
           datasets: [
             {
-              label: "Number of Employees",
-              data: countData,
+              label: "Salary",
+              data: salaries,
               backgroundColor: "rgba(75,192,192,0.6)",
               borderColor: "rgba(75,192,192,1)",
               borderWidth: 1,
@@ -39,19 +32,11 @@ const AgeDistributionHistogram = ({ data }) => {
         },
         options: {
           scales: {
-            x: {
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: "Age",
-              },
-            },
             y: {
               beginAtZero: true,
-              display: true,
               title: {
                 display: true,
-                text: "Number of Employees",
+                text: "Salary (LPA)",
               },
             },
           },
@@ -61,7 +46,12 @@ const AgeDistributionHistogram = ({ data }) => {
     }
   }, [data]);
 
-  return <canvas ref={chartRef} width={200} height={200} />;
+  return (
+    <div>
+      <h3>Employees salaries</h3>
+      <canvas ref={chartRef} width={1000} height={500} />
+    </div>
+  );
 };
 
-export default AgeDistributionHistogram;
+export default SalaryBarChart;

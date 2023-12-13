@@ -20,66 +20,93 @@ const Form = () => {
     });
     const json = await response.data;
     console.log(json);
+    window.location = "/";
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Department:
-          <input
-            type="text"
-            value={department}
-            onChange={(e) => setDepartment(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Position:
-          <input
-            type="text"
-            value={position}
-            onChange={(e) => setPosition(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Salary (LPA):
-          <input
-            type="number"
-            value={salary}
-            onChange={(e) => setSalary(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Age:
-          <input
-            type="number"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Gender:
-          <select value={gender} onChange={(e) => setGender(e.target.value)}>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-        </label>
-        <br />
-        <button type="submit">Submit</button>
+    <div className="text-center mt-5">
+      <h1>Add Employee Details</h1>
+      <form onSubmit={handleSubmit} className="row">
+        <div className="col-6">
+          <label htmlFor="name" className="form-label">
+            Name:
+            <input
+              type="text"
+              className="form-control"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </label>
+        </div>
+        <div className="col-6">
+          <label htmlFor="department" className="form-label">
+            Department:
+            <input
+              type="text"
+              className="form-control"
+              id="department"
+              value={department}
+              onChange={(e) => setDepartment(e.target.value)}
+            />
+          </label>
+        </div>
+        <div className="col-6">
+          <label htmlFor="position" className="form-label">
+            Position:
+            <input
+              type="text"
+              className="form-control"
+              id="position"
+              value={position}
+              onChange={(e) => setPosition(e.target.value)}
+            />
+          </label>
+        </div>
+        <div className="col-6">
+          <label htmlFor="salary" className="form-label">
+            Salary (LPA):
+            <input
+              type="number"
+              className="form-control"
+              id="salary"
+              value={salary}
+              onChange={(e) => setSalary(e.target.value)}
+            />
+          </label>
+        </div>
+        <div className="col-6">
+          <label htmlFor="age" className="form-label">
+            Age:
+            <input
+              type="number"
+              className="form-control"
+              id="age"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+            />
+          </label>
+        </div>
+        <div className="col-6">
+          <label htmlFor="gender" className="form-label">
+            Gender:
+            <select
+              className="form-select"
+              id="gender"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+            >
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+        </div>
+        <div className="col-12">
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   );

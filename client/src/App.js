@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Employees from "./components/Employees";
 import axios from "./api/axios";
-import Form from "./components/Form";
 import AgeDistributionChart from "./components/AgeDistributionChart";
 import DepartmentEmployeeCountChart from "./components/DepartmentEmployeeCountChart";
 import SalaryRangeDistributionChart from "./components/SalaryRangeDistributionChart";
 import GenderPieChart from "./components/GenderPieChart";
+import SalaryBarChart from "./components/SalaryBarChart";
 
 const App = () => {
   const [employeesData, setEmployeesData] = useState([]);
@@ -32,34 +32,43 @@ const App = () => {
       : 0;
 
   return (
-    <div className="container card">
-      <h1>Employee Dashboard</h1>
-      <div className="row text-center">
-        <h1>Key Metrics</h1>
-        <div className="card p-5 col-6">
-          {totalEmployees} {totalEmployees === 1 ? "Employee" : "Employees"}
-        </div>
-        <div className="card p-5 col-6">
-          Average Salary: {averageSalary.toFixed(2)} LPA
-        </div>
-      </div>
-      <div className="row mt-5">
-        <div className="col-3">
-          <AgeDistributionChart data={employeesData} />
-        </div>
-        <div className="col-3">
-          <DepartmentEmployeeCountChart data={employeesData} />
-        </div>
-        <div className="col-3">
-          <SalaryRangeDistributionChart data={employeesData} />
-        </div>
-        <div className="col-3">
-          <GenderPieChart data={employeesData} />
-        </div>
-      </div>
+    <div className="text-center">
+      <h1 className="fw-bold fs-1 m-2">Employee Dashboard</h1>
+      <div className="row">
+        <div className="container card col-lg-6 col-md-12">
+          <div className="row text-center mt-5">
+            <h1>Key Metrics</h1>
+            <div className="card p-1 col-sm-6">
+              {totalEmployees} {totalEmployees === 1 ? "Employee" : "Employees"}
+            </div>
+            <div className="card p-1 col-sm-6">
+              Average Salary: {averageSalary.toFixed(2)} LPA
+            </div>
+          </div>
+          <div className="row pb-4 pt-4">
+            <div className="col-sm-6">
+              <AgeDistributionChart data={employeesData} />
+            </div>
+            <div className="col-sm-6">
+              <SalaryRangeDistributionChart data={employeesData} />
+            </div>
+          </div>
 
-      <Form />
-      <Employees employeeList={employeesData} />
+          <div className="row pb-4 pt-4">
+            <div className="col-sm-6">
+              <DepartmentEmployeeCountChart data={employeesData} />
+            </div>
+            <div className="col-sm-6">
+              <GenderPieChart data={employeesData} />
+            </div>
+          </div>
+
+          <SalaryBarChart data={employeesData} />
+        </div>
+        <div className="card col-lg-6 col-md-12">
+          <Employees employeeList={employeesData} />
+        </div>
+      </div>
     </div>
   );
 };

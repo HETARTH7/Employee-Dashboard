@@ -47,7 +47,12 @@ const DepartmentEmployeeCountChart = ({ data }) => {
     }
   }, [data]);
 
-  return <canvas ref={chartRef} width={400} height={200} />;
+  return (
+    <div>
+      <h3>Departments</h3>
+      <canvas ref={chartRef} width={400} height={200} />
+    </div>
+  );
 };
 
 export default DepartmentEmployeeCountChart;

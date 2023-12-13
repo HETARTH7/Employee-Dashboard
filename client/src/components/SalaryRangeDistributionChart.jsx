@@ -80,7 +80,12 @@ const SalaryBoxplot = ({ data }) => {
     }
   }, [data]);
 
-  return <svg ref={svgRef} />;
+  return (
+    <div>
+      <h3>Salary Range Distribution</h3>
+      <svg ref={svgRef} />
+    </div>
+  );
 };
 
 export default SalaryBoxplot;

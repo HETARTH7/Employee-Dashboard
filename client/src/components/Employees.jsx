@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "../api/axios";
+import Form from "./Form";
 
 const Employees = (props) => {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
+  const itemsPerPage = 5;
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredEmployeeList, setFilteredEmployeeList] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
@@ -81,149 +82,197 @@ const Employees = (props) => {
   };
 
   return (
-    <div className="container border">
-      <h1>Employees</h1>
-      <div className="search-bar">
+    <div className="">
+      {!selectedEmployee ? (
+        <Form />
+      ) : (
+        <form className="mt-5 row text-center">
+          <h2>Update Employee Details</h2>
+          <div className="mb-3 col-6">
+            <label htmlFor="name" className="form-label">
+              Name:
+              <input
+                type="text"
+                className="form-control"
+                id="name"
+                name="name"
+                value={updatedEmployee.name}
+                onChange={(e) =>
+                  setUpdatedEmployee({
+                    ...updatedEmployee,
+                    name: e.target.value,
+                  })
+                }
+              />
+            </label>
+          </div>
+          <div className="mb-3 col-6">
+            <label htmlFor="department" className="form-label">
+              Department:
+              <input
+                type="text"
+                className="form-control"
+                id="department"
+                name="department"
+                value={updatedEmployee.department}
+                onChange={(e) =>
+                  setUpdatedEmployee({
+                    ...updatedEmployee,
+                    department: e.target.value,
+                  })
+                }
+              />
+            </label>
+          </div>
+          <div className="mb-3 col-6">
+            <label htmlFor="position" className="form-label">
+              Position:
+              <input
+                type="text"
+                className="form-control"
+                id="position"
+                name="position"
+                value={updatedEmployee.position}
+                onChange={(e) =>
+                  setUpdatedEmployee({
+                    ...updatedEmployee,
+                    position: e.target.value,
+                  })
+                }
+              />
+            </label>
+          </div>
+          <div className="mb-3 col-6">
+            <label htmlFor="salary" className="form-label">
+              Salary (LPA):
+              <input
+                type="number"
+                className="form-control"
+                id="salary"
+                name="salary"
+                value={updatedEmployee.salary}
+                onChange={(e) =>
+                  setUpdatedEmployee({
+                    ...updatedEmployee,
+                    salary: e.target.value,
+                  })
+                }
+              />
+            </label>
+          </div>
+          <div className="mb-3 col-6">
+            <label htmlFor="age" className="form-label">
+              Age:
+              <input
+                type="number"
+                className="form-control"
+                id="age"
+                name="age"
+                value={updatedEmployee.age}
+                onChange={(e) =>
+                  setUpdatedEmployee({
+                    ...updatedEmployee,
+                    age: e.target.value,
+                  })
+                }
+              />
+            </label>
+          </div>
+          <div className="mb-3 col-6">
+            <label htmlFor="gender" className="form-label">
+              Gender:
+              <input
+                type="text"
+                className="form-control"
+                id="gender"
+                name="gender"
+                value={updatedEmployee.gender}
+                onChange={(e) =>
+                  setUpdatedEmployee({
+                    ...updatedEmployee,
+                    gender: e.target.value,
+                  })
+                }
+              />
+            </label>
+          </div>
+          <div className="mb-3 col-6">
+            <button
+              type="button"
+              className="btn btn-primary me-2"
+              onClick={() => handleUpdate(selectedEmployee._id)}
+            >
+              Update
+            </button>
+            <button
+              type="button"
+              className="btn btn-danger me-2"
+              onClick={() => handleDelete(selectedEmployee._id)}
+            >
+              Delete
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => setSelectedEmployee(null)}
+            >
+              Close
+            </button>
+          </div>
+        </form>
+      )}
+      <div className="search-bar mb-5 mt-5">
         <input
           type="text"
+          className="form-control"
           placeholder="Search employees..."
           value={searchQuery}
           onChange={handleSearch}
         />
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th onClick={() => handleSort("name")}>Name</th>
-            <th onClick={() => handleSort("department")}>Department</th>
-            <th onClick={() => handleSort("position")}>Position</th>
-            <th onClick={() => handleSort("salary")}>Salary (LPA)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.map((employeeData, index) => (
-            <tr key={index}>
-              <td>{employeeData.name}</td>
-              <td>{employeeData.department}</td>
-              <td>{employeeData.position}</td>
-              <td>{employeeData.salary}</td>
-              <td>
-                <button onClick={() => handleEmployeeClick(employeeData)}>
-                  Actions
-                </button>
-              </td>
+      <div className="table-responsive">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th onClick={() => handleSort("name")}>Name</th>
+              <th onClick={() => handleSort("department")}>Department</th>
+              <th onClick={() => handleSort("position")}>Position</th>
+              <th onClick={() => handleSort("salary")}>Salary (LPA)</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {currentItems.map((employeeData, index) => (
+              <tr key={index}>
+                <td>{employeeData.name}</td>
+                <td>{employeeData.department}</td>
+                <td>{employeeData.position}</td>
+                <td>{employeeData.salary}</td>
+                <td>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => handleEmployeeClick(employeeData)}
+                  >
+                    Actions
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-      <div className="pagination">
+      <div>
         {Array.from({ length: totalPages }, (_, index) => (
-          <button key={index} onClick={() => handlePageChange(index + 1)}>
+          <button
+            key={index}
+            className="btn btn-secondary m-1"
+            onClick={() => handlePageChange(index + 1)}
+          >
             {index + 1}
           </button>
         ))}
       </div>
-
-      {selectedEmployee && (
-        <form className="employee-details-card">
-          <h2>Employee Details</h2>
-          <label>
-            Name:
-            <input
-              type="text"
-              name="name"
-              value={updatedEmployee.name}
-              onChange={(e) =>
-                setUpdatedEmployee({ ...updatedEmployee, name: e.target.value })
-              }
-            />
-          </label>
-          <label>
-            Department:
-            <input
-              type="text"
-              name="department"
-              value={updatedEmployee.department}
-              onChange={(e) =>
-                setUpdatedEmployee({
-                  ...updatedEmployee,
-                  department: e.target.value,
-                })
-              }
-            />
-          </label>
-          <label>
-            Position:
-            <input
-              type="text"
-              name="position"
-              value={updatedEmployee.position}
-              onChange={(e) =>
-                setUpdatedEmployee({
-                  ...updatedEmployee,
-                  position: e.target.value,
-                })
-              }
-            />
-          </label>
-          <label>
-            Salary (LPA):
-            <input
-              type="number"
-              name="salary"
-              value={updatedEmployee.salary}
-              onChange={(e) =>
-                setUpdatedEmployee({
-                  ...updatedEmployee,
-                  salary: e.target.value,
-                })
-              }
-            />
-          </label>
-          <label>
-            Age:
-            <input
-              type="number"
-              name="age"
-              value={updatedEmployee.age}
-              onChange={(e) =>
-                setUpdatedEmployee({
-                  ...updatedEmployee,
-                  age: e.target.value,
-                })
-              }
-            />
-          </label>
-          <label>
-            Gender:
-            <input
-              type="text"
-              name="gender"
-              value={updatedEmployee.gender}
-              onChange={(e) =>
-                setUpdatedEmployee({
-                  ...updatedEmployee,
-                  gender: e.target.value,
-                })
-              }
-            />
-          </label>
-          <button
-            type="submit"
-            onClick={() => handleUpdate(selectedEmployee._id)}
-          >
-            Update
-          </button>
-          <button
-            type="submit"
-            onClick={() => handleDelete(selectedEmployee._id)}
-          >
-            Delete
-          </button>
-          <button onClick={() => setSelectedEmployee(null)}>Close</button>
-        </form>
-      )}
     </div>
   );
 };
