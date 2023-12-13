@@ -4,7 +4,6 @@ const Employee = require("../models/employeeModel");
 const addEmployee = async (req, res) => {
   try {
     const { name, department, position, salary, age, gender } = req.body;
-
     // Validation for accurate and complete information
     if (!name || !department || !position || !salary || !age || !gender) {
       return res
