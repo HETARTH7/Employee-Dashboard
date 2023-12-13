@@ -126,7 +126,7 @@ const Employees = (props) => {
       </div>
 
       {selectedEmployee && (
-        <div className="employee-details-card">
+        <form className="employee-details-card">
           <h2>Employee Details</h2>
           <label>
             Name:
@@ -209,14 +209,20 @@ const Employees = (props) => {
               }
             />
           </label>
-          <button onClick={() => handleUpdate(selectedEmployee._id)}>
+          <button
+            type="submit"
+            onClick={() => handleUpdate(selectedEmployee._id)}
+          >
             Update
           </button>
-          <button onClick={() => handleDelete(selectedEmployee._id)}>
+          <button
+            type="submit"
+            onClick={() => handleDelete(selectedEmployee._id)}
+          >
             Delete
           </button>
           <button onClick={() => setSelectedEmployee(null)}>Close</button>
-        </div>
+        </form>
       )}
     </div>
   );

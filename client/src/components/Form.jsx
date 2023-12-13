@@ -9,8 +9,7 @@ const Form = () => {
   const [age, setAge] = useState(0);
   const [gender, setGender] = useState("Male");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     const response = await axios.post("", {
       name,
       department,

@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Employees from "./components/Employees";
 import axios from "./api/axios";
 import Form from "./components/Form";
+import ChartComponent from "./components/Charts";
 
 const App = () => {
   const [employeesData, setEmployeesData] = useState([]);
@@ -18,7 +19,7 @@ const App = () => {
       }
     };
     getData();
-  });
+  }, []);
 
   const totalEmployees = employeesData.length;
   const averageSalary =
@@ -33,6 +34,7 @@ const App = () => {
         {totalEmployees} {totalEmployees === 1 ? "Employee" : "Employees"}
       </div>
       <div>Average Salary: {averageSalary.toFixed(2)} LPA</div>
+      <ChartComponent data={employeesData} />
       <Form />
       <Employees employeeList={employeesData} />
     </div>
