@@ -19,7 +19,7 @@ const Form = () => {
       gender,
     });
     const json = await response.data;
-    console.log(json);
+    alert(json.message);
     window.location = "/";
   };
 

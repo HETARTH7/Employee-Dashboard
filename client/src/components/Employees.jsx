@@ -10,6 +10,12 @@ const Employees = (props) => {
   const [filteredEmployeeList, setFilteredEmployeeList] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [updatedEmployee, setUpdatedEmployee] = useState(null);
+  const [filter, setFilter] = useState(false);
+
+  const [filterDepartment, setFilterDepartment] = useState("");
+  const [filterPosition, setFilterPosition] = useState("");
+  const [filterSalaryMin, setFilterSalaryMin] = useState("");
+  const [filterSalaryMax, setFilterSalaryMax] = useState("");
 
   useEffect(() => {
     const sortedList = [...props.employeeList].sort((a, b) => {
@@ -22,14 +28,39 @@ const Employees = (props) => {
       return 0;
     });
 
-    const filteredList = sortedList.filter((employee) =>
-      Object.values(employee).some((value) =>
-        value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-      )
+    const filteredList = sortedList.filter(
+      (employee) =>
+        Object.values(employee).some((value) =>
+          value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+        ) &&
+        (filterDepartment
+          ? employee.department
+              .toLowerCase()
+              .includes(filterDepartment.toLowerCase())
+          : true) &&
+        (filterPosition
+          ? employee.position
+              .toLowerCase()
+              .includes(filterPosition.toLowerCase())
+          : true) &&
+        (filterSalaryMin
+          ? parseFloat(employee.salary) >= parseFloat(filterSalaryMin)
+          : true) &&
+        (filterSalaryMax
+          ? parseFloat(employee.salary) <= parseFloat(filterSalaryMax)
+          : true)
     );
 
     setFilteredEmployeeList(filteredList);
-  }, [sortConfig, searchQuery, props.employeeList]);
+  }, [
+    sortConfig,
+    searchQuery,
+    filterDepartment,
+    filterPosition,
+    filterSalaryMin,
+    filterSalaryMax,
+    props.employeeList,
+  ]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -64,9 +95,10 @@ const Employees = (props) => {
 
   const handleUpdate = async (id) => {
     const response = await axios.put(`/${id}`, updatedEmployee);
-    const updatedData = await response.data;
-    console.log(updatedData);
+    const json = await response.data;
+    alert(json.message);
     setSelectedEmployee(null);
+    window.location = "/";
   };
 
   const handleDelete = async (id) => {
@@ -76,9 +108,15 @@ const Employees = (props) => {
     if (shouldDelete) {
       const response = await axios.delete(`/${id}`);
       const json = await response.data;
-      console.log(json);
+      alert(json.message);
       setSelectedEmployee(null);
+      window.location = "/";
     }
+  };
+
+  const handleFilter = () => {
+    setCurrentPage(1);
+    setFilter(!filter);
   };
 
   return (
@@ -228,6 +266,39 @@ const Employees = (props) => {
           placeholder="Search employees..."
           value={searchQuery}
           onChange={handleSearch}
+        />
+        <button className="btn btn-secondary m-1" onClick={handleFilter}>
+          Filter
+        </button>
+      </div>
+      <div hidden={filter ? false : true} className="filter-bar mb-5 mt-5">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Filter by Department..."
+          value={filterDepartment}
+          onChange={(e) => setFilterDepartment(e.target.value)}
+        />
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Filter by Position..."
+          value={filterPosition}
+          onChange={(e) => setFilterPosition(e.target.value)}
+        />
+        <input
+          type="number"
+          className="form-control"
+          placeholder="Min Salary"
+          value={filterSalaryMin}
+          onChange={(e) => setFilterSalaryMin(e.target.value)}
+        />
+        <input
+          type="number"
+          className="form-control"
+          placeholder="Max Salary"
+          value={filterSalaryMax}
+          onChange={(e) => setFilterSalaryMax(e.target.value)}
         />
       </div>
       <div className="table-responsive">
