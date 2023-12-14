@@ -103,7 +103,7 @@ const Form = () => {
           </label>
         </div>
         <div className="col-12">
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-outline-success">
             Submit
           </button>
         </div>

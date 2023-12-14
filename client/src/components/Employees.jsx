@@ -237,14 +237,14 @@ const Employees = (props) => {
           <div className="mb-3 col-6">
             <button
               type="button"
-              className="btn btn-primary me-2"
+              className="btn btn-outline-success me-2"
               onClick={() => handleUpdate(selectedEmployee._id)}
             >
               Update
             </button>
             <button
               type="button"
-              className="btn btn-danger me-2"
+              className="btn btn-outline-danger me-2"
               onClick={() => handleDelete(selectedEmployee._id)}
             >
               Delete
@@ -321,7 +321,7 @@ const Employees = (props) => {
                 <td>{employeeData.salary}</td>
                 <td>
                   <button
-                    className="btn btn-primary"
+                    className="btn btn-outline-success"
                     onClick={() => handleEmployeeClick(employeeData)}
                   >
                     Actions

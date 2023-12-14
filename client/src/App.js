@@ -33,19 +33,36 @@ const App = () => {
 
   return (
     <div className="text-center">
-      <h1 className="fw-bold fs-1 m-2">Employee Dashboard</h1>
-      <div className="row">
-        <div className="container card col-lg-6 col-md-12">
-          <div className="row text-center mt-5">
+      <h1 style={{ color: "#B6C4B6" }} className="fw-bold fs-1 m-2">
+        Employee Dashboard
+      </h1>
+      <div style={{ "background-color": "aquamarine" }} className="row">
+        <div
+          style={{ "background-color": "aquamarine" }}
+          className="container card col-lg-6 col-md-12"
+        >
+          <div
+            style={{ "background-color": "aquamarine" }}
+            className="row text-center mt-5"
+          >
             <h1>Key Metrics</h1>
-            <div className="card p-1 col-sm-6">
+            <div
+              style={{ "background-color": "teal" }}
+              className="card p-1 col-sm-6"
+            >
               {totalEmployees} {totalEmployees === 1 ? "Employee" : "Employees"}
             </div>
-            <div className="card p-1 col-sm-6">
+            <div
+              style={{ "background-color": "teal" }}
+              className="card p-1 col-sm-6"
+            >
               Average Salary: {averageSalary.toFixed(2)} LPA
             </div>
           </div>
-          <div className="row pb-4 pt-4">
+          <div
+            style={{ "background-color": "aquamarine" }}
+            className="row pb-4 pt-4"
+          >
             <div className="col-sm-6">
               <AgeDistributionChart data={employeesData} />
             </div>
@@ -54,7 +71,10 @@ const App = () => {
             </div>
           </div>
 
-          <div className="row pb-4 pt-4">
+          <div
+            style={{ "background-color": "aquamarine" }}
+            className="row pb-4 pt-4"
+          >
             <div className="col-sm-6">
               <DepartmentEmployeeCountChart data={employeesData} />
             </div>
@@ -65,7 +85,10 @@ const App = () => {
 
           <SalaryBarChart data={employeesData} />
         </div>
-        <div className="card col-lg-6 col-md-12">
+        <div
+          style={{ "background-color": "aquamarine" }}
+          className="card col-lg-6 col-md-12"
+        >
           <Employees employeeList={employeesData} />
         </div>
       </div>
